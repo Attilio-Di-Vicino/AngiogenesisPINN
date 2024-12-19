@@ -1,8 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
+from tqdm import tqdm
 from early_stopping import EarlyStopping
+from logger import Logger
+
+logger = Logger()
 
 class AngiogenesisPINN(nn.Module):
     def __init__(self, device, layers=[2, 100, 100, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=10000):
@@ -41,6 +44,7 @@ class AngiogenesisPINN(nn.Module):
             if i < len(layers) - 2:
                 layers_list.append(nn.Tanh())  # Using Tanh activation
         self.net = nn.Sequential(*layers_list).to(device)
+        logger.info("Model created successfully")
 
     def forward(self, x, t):
         """Perform a forward pass through the network."""
@@ -125,6 +129,7 @@ class AngiogenesisPINN(nn.Module):
         return torch.mean((C - C0)**2 + (P - P0)**2 + (I - I0)**2 + (F - F0)**2)
 
     def fit(self):
+        logger.info("Training...")
         optimizer = optim.Adam(self.net.parameters(), lr=self.learning_rate)
 
         # Training data
@@ -138,7 +143,8 @@ class AngiogenesisPINN(nn.Module):
         early_stopping = EarlyStopping(patience=self.patience)
 
         best_loss = float('inf')
-        for epoch in range(self.n_epochs):
+
+        for epoch in tqdm(range(self.n_epochs), desc=f"[INFO] #epochs: {self.n_epochs:.2e}"):
             optimizer.zero_grad()
 
             pde_l = self.pde_loss(x_train, t_train)
@@ -156,6 +162,3 @@ class AngiogenesisPINN(nn.Module):
             if early_stopping.should_stop(loss.item()):
                 print(f"Early stopping at epoch {epoch}")
                 break
-
-            if epoch % 100 == 0:
-                print(f'Epoch {epoch}, Loss: {loss.item():.2e}')

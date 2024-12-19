@@ -1,7 +1,11 @@
 import torch
 import matplotlib.pyplot as plt
+from logger import Logger
+
+logger = Logger()
 
 def plot_results(model, device):
+    logger.info("Plotting...")
     # Create test points
     nx, nt = 100, 100
     x = torch.linspace(0, 1, nx).reshape(-1, 1).to(device)

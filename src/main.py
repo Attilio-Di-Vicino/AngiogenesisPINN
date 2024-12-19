@@ -1,14 +1,17 @@
 import torch
 from angiogenesis_pinn import AngiogenesisPINN
 from plotter import plot_results
+from logger import Logger
+
+logger = Logger()
 
 if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"[INFO] device:{device}")
+    logger.info("Device:{device}")
 
     # Initialize the model with custom parameters
     model = AngiogenesisPINN(device=device, layers=[2, 100, 100, 4], epsilon=40, 
-                             learning_rate=0.001, patience=50, n_epochs=1000)
+                             learning_rate=0.001, patience=50, n_epochs=100)
 
     # Train the model
     model.fit()
