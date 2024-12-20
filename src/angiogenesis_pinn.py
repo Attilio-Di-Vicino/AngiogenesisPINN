@@ -4,6 +4,8 @@ import torch.optim as optim
 from tqdm import tqdm
 from early_stopping import EarlyStopping
 from logger import Logger
+import time
+import datetime
 
 logger = Logger()
 
@@ -36,6 +38,7 @@ class AngiogenesisPINN(nn.Module):
         self.learning_rate = learning_rate
         self.patience = patience
         self.n_epochs = n_epochs
+        self.execution_fit_time = 0
 
         # Define a dynamically created neural network
         layers_list = []
@@ -130,6 +133,7 @@ class AngiogenesisPINN(nn.Module):
 
     def fit(self):
         logger.info("Training...")
+        start_time = time.time()
         optimizer = optim.Adam(self.net.parameters(), lr=self.learning_rate)
 
         # Training data
@@ -144,7 +148,7 @@ class AngiogenesisPINN(nn.Module):
 
         best_loss = float('inf')
 
-        for epoch in tqdm(range(self.n_epochs), desc=f"[INFO] #epochs: {self.n_epochs:.2e}"):
+        for epoch in tqdm(range(self.n_epochs), desc="[INFO]"):
             optimizer.zero_grad()
 
             pde_l = self.pde_loss(x_train, t_train)
@@ -162,3 +166,8 @@ class AngiogenesisPINN(nn.Module):
             if early_stopping.should_stop(loss.item()):
                 print(f"Early stopping at epoch {epoch}")
                 break
+        
+        # Compute the execution time
+        end_time = time.time()
+        self.execution_fit_time = end_time - start_time
+        logger.info(f"Training time: {str(datetime.timedelta(seconds=self.execution_fit_time))}")
