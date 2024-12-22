@@ -10,7 +10,8 @@ import datetime
 logger = Logger()
 
 class AngiogenesisPINN(nn.Module):
-    def __init__(self, device, layers=[2, 100, 100, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=10000):
+    def __init__(self, device, X_train, X_test, T_train, T_test, layers=[2, 100, 100, 100, 4], epsilon=40,
+                 learning_rate=0.001, patience=50, n_epochs=10000):
         """
         Initialize the Angiogenesis PINN (Physics Informed Neural Network).
 
@@ -39,6 +40,10 @@ class AngiogenesisPINN(nn.Module):
         self.patience = patience
         self.n_epochs = n_epochs
         self.execution_fit_time = 0
+        self.X_train = X_train
+        self.X_test = X_test
+        self.T_train = T_train
+        self.T_test = T_test
 
         # Define a dynamically created neural network
         layers_list = []
@@ -136,13 +141,6 @@ class AngiogenesisPINN(nn.Module):
         start_time = time.time()
         optimizer = optim.Adam(self.net.parameters(), lr=self.learning_rate)
 
-        # Training data
-        x = torch.linspace(0, 1, 100).reshape(-1, 1).to(self.device)
-        t = torch.linspace(0, 1, 100).reshape(-1, 1).to(self.device)
-        X, T = torch.meshgrid(x.squeeze(), t.squeeze(), indexing='ij')
-        x_train = X.reshape(-1, 1)
-        t_train = T.reshape(-1, 1)
-
         # Early stopping
         early_stopping = EarlyStopping(patience=self.patience)
 
@@ -151,9 +149,9 @@ class AngiogenesisPINN(nn.Module):
         for epoch in tqdm(range(self.n_epochs), desc="[INFO]"):
             optimizer.zero_grad()
 
-            pde_l = self.pde_loss(x_train, t_train)
-            bc_l = self.boundary_loss(x_train, t_train)
-            ic_l = self.initial_loss(x_train)
+            pde_l = self.pde_loss(self.X_train, self.T_train)
+            bc_l = self.boundary_loss(self.X_train, self.T_train)
+            ic_l = self.initial_loss(self.T_train)
 
             loss = pde_l + bc_l + ic_l
             loss.backward()
