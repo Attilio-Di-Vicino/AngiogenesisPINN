@@ -93,7 +93,7 @@ def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter,
     np.save(os.path.join(folder_name, "P.npy"), P)
     np.save(os.path.join(folder_name, "I.npy"), I)
     np.save(os.path.join(folder_name, "F.npy"), F)
-    torch.save(model.net.state_dict(), 'best_model.pth')
+    torch.save(model.net.state_dict(), os.path.join(folder_name, 'best_model.pth'))
 
     # Plot the model (trained)
     fig.savefig(os.path.join(folder_name, "plot.png"))
