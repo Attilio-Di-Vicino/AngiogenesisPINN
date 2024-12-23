@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import math
 from tqdm import tqdm
 from early_stopping import EarlyStopping
 from logger import Logger
@@ -158,9 +157,9 @@ class AngiogenesisPINN(nn.Module):
             loss.backward()
             optimizer.step()
 
-            if loss.item() < best_loss:
-                best_loss = loss.item()
-                torch.save(self.net.state_dict(), 'best_model.pth')
+            # if loss.item() < best_loss:
+            #     best_loss = loss.item()
+            #     torch.save(self.net.state_dict(), 'best_model.pth')
 
             if early_stopping.should_stop(loss.item()):
                 print(f"Early stopping at epoch {epoch}")

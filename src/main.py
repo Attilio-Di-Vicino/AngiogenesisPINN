@@ -1,9 +1,5 @@
-import os
-import numpy as np
 import torch
 import argparse
-import time
-import datetime
 from angiogenesis_pinn import AngiogenesisPINN
 from sklearn.model_selection import train_test_split
 from plotter import plot_results
@@ -73,7 +69,7 @@ def main():
     # Plot the model (trained)
     fig = plot_results(X_test, T_test, C, P, I, F, nx, nt)
 
-    save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time))
+    save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time), model)
 
     logger.info("All operations were performed successfully")
 
