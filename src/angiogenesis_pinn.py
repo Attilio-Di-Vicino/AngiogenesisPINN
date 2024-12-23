@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import math
 from tqdm import tqdm
 from early_stopping import EarlyStopping
 from logger import Logger
@@ -169,3 +170,39 @@ class AngiogenesisPINN(nn.Module):
         end_time = time.time()
         self.execution_fit_time = end_time - start_time
         logger.info(f"Training time: {str(datetime.timedelta(seconds=self.execution_fit_time))}")
+        return datetime.timedelta(seconds=self.execution_fit_time)
+
+    def predict(self, x, t, nx, nt):
+        """
+        Predict the output of the model and reshape into separate components.
+
+        Parameters:
+        - x: Input tensor for spatial domain.
+        - t: Input tensor for temporal domain.
+        - nx: Number of spatial points (used for reshaping the output).
+        - nt: Number of temporal points (used for reshaping the output).
+
+        Returns:
+        - C, P, I, F: Numpy arrays representing the reshaped components of the model output.
+        """
+        self.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # Disable gradient computation for inference
+            y_pred = self.forward(x, t)
+
+        # # Numero totale di punti
+        # total_points = y_pred.shape[0]
+
+        # # Prova a trovare una coppia di nx e nt sensata
+        # nx = int(math.sqrt(total_points))
+        # nt = total_points // nx
+
+        # if nx * nt != total_points:
+        #     raise ValueError(f"Unable to reshape: total_points ({total_points}) not compatible with nx ({nx}) and nt ({nt}).")
+        
+        # Reshape predictions
+        C = y_pred[:, 0].reshape(nx, nt).cpu().numpy()
+        P = y_pred[:, 1].reshape(nx, nt).cpu().numpy()
+        I = y_pred[:, 2].reshape(nx, nt).cpu().numpy()
+        F = y_pred[:, 3].reshape(nx, nt).cpu().numpy()
+        
+        return C, P, I, F

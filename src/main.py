@@ -1,22 +1,29 @@
+import os
+import numpy as np
 import torch
 import argparse
+import time
+import datetime
 from angiogenesis_pinn import AngiogenesisPINN
 from sklearn.model_selection import train_test_split
 from plotter import plot_results
 from logger import Logger
+from utils import check_device, print_system_info, save_all
 
 logger = Logger()
 
 # DONE:
 # 1. Input
+# 3. GPU
+# 5. Output
 
 # TODO:
 # 2. Model evaluation ?? 
-# 3. GPU
 # 4. Time
-# 5. Output
 
 INPUT_SIZE = 100
+TEST_SIZE = 0.5
+nx, nt = 100, 100
 
 def main():
     parser = argparse.ArgumentParser()
@@ -28,31 +35,11 @@ def main():
         print("Try: python main.py --device cuda\n")
         raise e
 
-    # Controlla il dispositivo specificato o sceglie automaticamente
-    if args.device:
-        if args.device == "cuda" and torch.cuda.is_available():
-            device = torch.device("cuda")
-            logger.info("GPU specified and is available. Usage: cuda")
-        elif args.device == "cuda" and not torch.cuda.is_available():
-            device = torch.device("cpu")
-            logger.warning("GPU specified but not available. Fallback usage: cpu")
-        elif args.device == "cpu":
-            device = torch.device("cpu")
-            logger.info("CPU specified. Usage: cpu")
-        else:
-            device = torch.device("cpu")
-            logger.error(
-                f"Device '{args.device}' is invalid. Please use a valid option. "
-                f"Try: --device cuda or --device cpu. Defaulting to CPU."
-            )
-    else:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        logger.info(f"No device specified. Defaulting to: {'cuda' if torch.cuda.is_available() else 'cpu'}")
-
+    # Control the specified device or choose automatically
+    device = check_device(args.device)
     logger.info(f"Final device selected: {device}")
-
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    logger.info(f"Device: {device}")
+    
+    counter = print_system_info()
 
     # Training data
     logger.info("Loading the dataset...")
@@ -62,24 +49,33 @@ def main():
     X_train = X.reshape(-1, 1)
     T_train = T.reshape(-1, 1)
 
-    logger.info("Splitting the dataset...")
-    X_train, X_test, T_train, T_test = train_test_split(X_train, T_train, test_size=0.2, random_state=42)
+    X_test = X.reshape(-1, 1)
+    T_test = T.reshape(-1, 1)
+
+    # logger.info("Splitting the dataset...")
+    # X_train, X_test, T_train, T_test = train_test_split(X_train, T_train, test_size=TEST_SIZE, random_state=42)
+
     logger.info("****** Shape of dataset ******")
     logger.info(f"X_train: {X_train.shape}")
     logger.info(f"T_train: {T_train.shape}")
     logger.info(f"X_test:  {X_test.shape}")
     logger.info(f"T_test:  {T_test.shape}")
 
-
     # Initialize the model with custom parameters
     model = AngiogenesisPINN(device=device, X_train=X_train, X_test=X_test, T_train=T_train, T_test=T_test, 
                              layers=[2, 100, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=100)
 
     # Train the model
-    model.fit()
+    training_time = model.fit()
 
-    # # Plot the model (trained)
-    # plot_results(model, device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+    C, P, I, F = model.predict(X_test, T_test, nx, nt)
+
+    # Plot the model (trained)
+    fig = plot_results(X_test, T_test, C, P, I, F, nx, nt)
+
+    save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time))
+
+    logger.info("All operations were performed successfully")
 
 if __name__ == "__main__":
     main()
