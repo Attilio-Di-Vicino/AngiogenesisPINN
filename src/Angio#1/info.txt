@@ -1,0 +1,13 @@
+[INFO] ****** Shape of dataset ******
+[INFO] X_train: torch.Size([10000, 1])
+[INFO] T_train: torch.Size([10000, 1])
+[INFO] X_test: torch.Size([10000, 1])
+[INFO] T_test: torch.Size([10000, 1])
+[INFO] ********* Info Device ********
+[INFO] Device: cuda
+[INFO] Logical CPUs: 20
+[INFO] Physical CPUs: 20
+[INFO] Number of available GPUs: 1
+[INFO] GPU 0: Quadro RTX 6000, Memory: 22.16 GB
+[INFO] GPU 0 - Allocated memory: 0.00 GB, Cache memory: 0.00 GB
+[INFO] Training time: 0:00:36.720450
