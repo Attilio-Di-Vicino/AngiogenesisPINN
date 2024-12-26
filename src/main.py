@@ -2,7 +2,7 @@ import torch
 import argparse
 from angiogenesis_pinn import AngiogenesisPINN
 from sklearn.model_selection import train_test_split
-from plotter import plot_results
+from plotter import plot_results, plot_loss
 from logger import Logger
 from utils import check_device, print_system_info, save_all
 
@@ -11,15 +11,15 @@ logger = Logger()
 # DONE:
 # 1. Input
 # 3. GPU
+# 4. Time
 # 5. Output
 
 # TODO:
 # 2. Model evaluation ?? 
-# 4. Time
 
 INPUT_SIZE = 100
 TEST_SIZE = 0.5
-nx, nt = 100, 100
+nx, nt = INPUT_SIZE, INPUT_SIZE
 
 def main():
     parser = argparse.ArgumentParser()
@@ -59,17 +59,19 @@ def main():
 
     # Initialize the model with custom parameters
     model = AngiogenesisPINN(device=device, X_train=X_train, X_test=X_test, T_train=T_train, T_test=T_test, 
-                             layers=[2, 100, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=100)
+                             layers=[2, 100, 150, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=1000)
 
     # Train the model
-    training_time = model.fit()
+    training_time, loss = model.fit()
+
+    fig_loss = plot_loss(list_loss=loss)
 
     C, P, I, F = model.predict(X_test, T_test, nx, nt)
 
     # Plot the model (trained)
     fig = plot_results(X_test, T_test, C, P, I, F, nx, nt)
 
-    save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time), model)
+    save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time), model, fig_loss=fig_loss)
 
     logger.info("All operations were performed successfully")
 

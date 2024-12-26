@@ -81,7 +81,7 @@ def get_next_folder_number(base_name="Angio", extension=".txt"):
     
     return folder_name
 
-def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, training_time, model):
+def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, training_time, model, fig_loss):
     # Uso della funzione per creare una cartella progressiva
     folder_name = get_next_folder_number()
 
@@ -97,6 +97,7 @@ def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter,
 
     # Plot the model (trained)
     fig.savefig(os.path.join(folder_name, "plot.png"))
+    fig_loss.savefig(os.path.join(folder_name, "loss.png"))
 
     # Scrivi le informazioni in un file di log
     with open(os.path.join(folder_name, "info.txt"), "w") as f:

@@ -145,6 +145,7 @@ class AngiogenesisPINN(nn.Module):
         early_stopping = EarlyStopping(patience=self.patience)
 
         best_loss = float('inf')
+        list_loss = []
 
         for epoch in tqdm(range(self.n_epochs), desc="[INFO]"):
             optimizer.zero_grad()
@@ -156,6 +157,7 @@ class AngiogenesisPINN(nn.Module):
             loss = pde_l + bc_l + ic_l
             loss.backward()
             optimizer.step()
+            list_loss.append(loss.item())
 
             # if loss.item() < best_loss:
             #     best_loss = loss.item()
@@ -169,7 +171,7 @@ class AngiogenesisPINN(nn.Module):
         end_time = time.time()
         self.execution_fit_time = end_time - start_time
         logger.info(f"Training time: {str(datetime.timedelta(seconds=self.execution_fit_time))}")
-        return datetime.timedelta(seconds=self.execution_fit_time)
+        return datetime.timedelta(seconds=self.execution_fit_time), list_loss
 
     def predict(self, x, t, nx, nt):
         """
