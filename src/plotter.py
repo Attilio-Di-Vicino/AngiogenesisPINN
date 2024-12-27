@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import torch
 import matplotlib.pyplot as plt
 from logger import Logger
@@ -14,7 +15,7 @@ def single_plot(fig, n, projection, X, T, Z, cmap, name):
     ax1.set_title(name)
 
 
-def plot_results(X, T, C, P, I, F, nx, nt):
+def plot_results(X, T, C, P, I, F, nx, nt, show=False):
     logger.info("Plotting...")
 
     # Reshape X_test e T_test di nuovo come X e T
@@ -36,9 +37,8 @@ def plot_results(X, T, C, P, I, F, nx, nt):
     single_plot(fig, 224, '3d', X, T, F, 'viridis', 'ECM (F)')
 
     plt.tight_layout()
-    plt.show()
-    # plt.savefig(os.path.join(folder_name, "plot.png"))
-
+    if show:
+        plt.show()
     return fig
 
 def plot_loss(list_loss):
@@ -51,3 +51,49 @@ def plot_loss(list_loss):
     plt.grid(True)
     plt.show()
     return fig
+
+INPUT_SIZE = 100
+nx, nt = INPUT_SIZE, INPUT_SIZE
+
+def main():
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Training data
+    logger.info("Loading the dataset...")
+    x = torch.linspace(0, 1, INPUT_SIZE).reshape(-1, 1).to(device)
+    t = torch.linspace(0, 1, INPUT_SIZE).reshape(-1, 1).to(device)
+    X, T = torch.meshgrid(x.squeeze(), t.squeeze(), indexing='ij')
+    X = X.reshape(-1, 1)
+    T = T.reshape(-1, 1)
+
+    DIR = "Angio#1"
+    Cfile = "C.npy"
+    Ffile = "F.npy"
+    Ifile = "I.npy"
+    Pfile = "P.npy"
+
+    # File path
+    c_path = os.path.join(DIR, Cfile)
+    f_path = os.path.join(DIR, Ffile)
+    i_path = os.path.join(DIR, Ifile)
+    p_path = os.path.join(DIR, Pfile)
+
+    # file loading
+    try:
+        C = np.load(c_path)
+        F = np.load(f_path)
+        I = np.load(i_path)
+        P = np.load(p_path)
+        logger.info("Files loaded successfully.")
+    except FileNotFoundError as e:
+        logger.error(f"Error loading files: {e}")
+        return
+
+    # Plot
+    try:
+        _ = plot_results(X, T, C, P, I, F, nx, nt, True)
+    except Exception as e:
+        logger.error(f"Error in plotting results: {e}")
+
+if __name__ == "__main__":
+    main()

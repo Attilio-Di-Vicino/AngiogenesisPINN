@@ -17,7 +17,7 @@ logger = Logger()
 # TODO:
 # 2. Model evaluation ?? 
 
-INPUT_SIZE = 100
+INPUT_SIZE = 150
 TEST_SIZE = 0.5
 nx, nt = INPUT_SIZE, INPUT_SIZE
 
@@ -59,7 +59,7 @@ def main():
 
     # Initialize the model with custom parameters
     model = AngiogenesisPINN(device=device, X_train=X_train, X_test=X_test, T_train=T_train, T_test=T_test, 
-                             layers=[2, 100, 150, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=1000)
+                             layers=[2, 100, 150, 150, 100, 4], epsilon=40, learning_rate=0.001, patience=50, n_epochs=1000)
 
     # Train the model
     training_time, loss = model.fit()
@@ -69,7 +69,7 @@ def main():
     C, P, I, F = model.predict(X_test, T_test, nx, nt)
 
     # Plot the model (trained)
-    fig = plot_results(X_test, T_test, C, P, I, F, nx, nt)
+    fig = plot_results(X_test, T_test, C, P, I, F, nx, nt, show=False)
 
     save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, str(training_time), model, fig_loss=fig_loss)
 
