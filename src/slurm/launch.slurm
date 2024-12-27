@@ -8,6 +8,6 @@
 #SBATCH --mem=44000          
 #SBATCH --job-name="pinns"
 
-module load cuda/12.1 
-source activate ~/pinn/bin/activate
-python main.py
+cd ..
+module load cuda
+python main.py --device cuda
