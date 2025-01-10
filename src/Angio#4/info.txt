@@ -1,0 +1,11 @@
+[INFO] ****** Shape of dataset ******
+[INFO] X_train: torch.Size([2500, 1])
+[INFO] T_train: torch.Size([2500, 1])
+[INFO] X_test: torch.Size([2500, 1])
+[INFO] T_test: torch.Size([2500, 1])
+[INFO] ********* Info Device ********
+[INFO] Device: cpu
+[INFO] Logical CPUs: 8
+[INFO] Physical CPUs: 8
+[INFO] No GPU available.
+[INFO] Training time: 0:00:24.160275

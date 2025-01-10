@@ -17,7 +17,7 @@ logger = Logger()
 # TODO:
 # 2. Model evaluation ?? 
 
-INPUT_SIZE = 150
+INPUT_SIZE = 50
 TEST_SIZE = 0.5
 nx, nt = INPUT_SIZE, INPUT_SIZE
 
@@ -39,8 +39,8 @@ def main():
 
     # Training data
     logger.info("Loading the dataset...")
-    x = torch.linspace(0, 1, INPUT_SIZE).reshape(-1, 1).to(device)
-    t = torch.linspace(0, 1, INPUT_SIZE).reshape(-1, 1).to(device)
+    x = torch.linspace(0, 5, INPUT_SIZE).reshape(-1, 1).to(device)
+    t = torch.linspace(0, 25, INPUT_SIZE).reshape(-1, 1).to(device)
     X, T = torch.meshgrid(x.squeeze(), t.squeeze(), indexing='ij')
     X_train = X.reshape(-1, 1)
     T_train = T.reshape(-1, 1)
