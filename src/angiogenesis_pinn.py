@@ -154,7 +154,7 @@ class AngiogenesisPINN(nn.Module):
             bc_l = self.boundary_loss(self.X_train, self.T_train)
             ic_l = self.initial_loss(self.T_train)
 
-            loss = pde_l + bc_l + ic_lP
+            loss = pde_l + bc_l + ic_l
             loss.backward()
             optimizer.step()
             list_loss.append(loss.item())
