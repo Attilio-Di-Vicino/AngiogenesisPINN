@@ -17,7 +17,7 @@ logger = Logger()
 # TODO:
 # 2. Model evaluation ?? 
 
-INPUT_SIZE = 10
+INPUT_SIZE = 50
 TEST_SIZE = 0.5
 nx, nt = INPUT_SIZE, INPUT_SIZE
 

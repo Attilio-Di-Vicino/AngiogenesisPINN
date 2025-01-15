@@ -1,20 +1,0 @@
-[INFO] GPU specified and is available. Usage: cuda
-[INFO] Final device selected: cuda
-[INFO] Available logical CPUs: 32
-[INFO] Available physical CPUs: 32
-[INFO] Number of available GPUs: 1
-[INFO] GPU 0: Tesla V100-SXM2-32GB, Memory: 31.75 GB
-[INFO] GPU 0 - Allocated memory: 0.00 GB, Cache memory: 0.00 GB
-[INFO] Loading the dataset...
-[INFO] ****** Shape of dataset ******
-[INFO] X_train: torch.Size([100, 1])
-[INFO] T_train: torch.Size([100, 1])
-[INFO] X_test:  torch.Size([100, 1])
-[INFO] T_test:  torch.Size([100, 1])
-[INFO] Model created successfully
-[INFO] Training...
-[INFO]:   0%|          | 0/1000 [00:00<?, ?it/s][INFO]:   0%|          | 1/1000 [00:00<15:02,  1.11it/s][INFO]:   0%|          | 3/1000 [00:01<04:45,  3.49it/s][INFO]:   0%|          | 4/1000 [00:01<03:44,  4.44it/s][INFO]:   1%|          | 6/1000 [00:01<02:20,  7.07it/s][INFO]:   1%|          | 9/1000 [00:01<01:28, 11.22it/s][INFO]:   1%|          | 12/1000 [00:01<01:06, 14.95it/s][INFO]:   2%|▏         | 15/1000 [00:01<00:54, 18.13it/s][INFO]:   2%|▏         | 18/1000 [00:01<00:46, 20.92it/s][INFO]:   2%|▏         | 21/1000 [00:01<00:47, 20.71it/s][INFO]:   2%|▏         | 24/1000 [00:01<00:46, 21.16it/s][INFO]:   3%|▎         | 27/1000 [00:02<00:43, 22.27it/s][INFO]:   3%|▎         | 30/1000 [00:02<00:41, 23.40it/s][INFO]:   3%|▎         | 33/1000 [00:02<00:39, 24.33it/s][INFO]:   4%|▎         | 36/1000 [00:02<00:41, 23.09it/s][INFO]:   4%|▍         | 39/1000 [00:02<00:40, 23.77it/s][INFO]:   4%|▍         | 42/1000 [00:02<00:43, 22.16it/s][INFO]:   4%|▍         | 45/1000 [00:02<00:46, 20.68it/s][INFO]:   5%|▍         | 48/1000 [00:03<00:43, 21.85it/s][INFO]:   5%|▌         | 51/1000 [00:03<00:46, 20.36it/s][INFO]:   5%|▌         | 54/1000 [00:03<00:48, 19.58it/s][INFO]:   6%|▌         | 57/1000 [00:03<00:44, 21.00it/s][INFO]:   6%|▌         | 60/1000 [00:03<00:44, 21.14it/s][INFO]:   6%|▋         | 64/1000 [00:03<00:37, 24.71it/s][INFO]:   7%|▋         | 68/1000 [00:03<00:33, 27.75it/s][INFO]:   7%|▋         | 71/1000 [00:04<00:43, 21.42it/s][INFO]:   8%|▊         | 75/1000 [00:04<00:37, 24.52it/s][INFO]:   8%|▊         | 78/1000 [00:04<01:03, 14.56it/s][INFO]:   8%|▊         | 81/1000 [00:04<00:59, 15.44it/s][INFO]:   8%|▊         | 84/1000 [00:04<00:55, 16.65it/s][INFO]:   9%|▊         | 87/1000 [00:05<00:51, 17.64it/s][INFO]:   9%|▉         | 90/1000 [00:05<00:46, 19.47it/s][INFO]:   9%|▉         | 93/1000 [00:05<00:43, 20.99it/s][INFO]:  10%|▉         | 96/1000 [00:05<00:48, 18.51it/s][INFO]:  10%|▉         | 99/1000 [00:05<00:44, 20.13it/s][INFO]:  10%|█         | 102/1000 [00:05<00:45, 19.65it/s][INFO]:  10%|█         | 105/1000 [00:05<00:48, 18.53it/s][INFO]:  11%|█         | 107/1000 [00:06<00:47, 18.76it/s][INFO]:  11%|█         | 110/1000 [00:06<00:47, 18.83it/s]Early stopping at epoch 111
-[INFO]:  11%|█         | 111/1000 [00:06<00:52, 16.98it/s]
-[INFO] Training time: 0:00:11.229137
-[INFO] Plotting...
-[INFO] All operations were performed successfully
