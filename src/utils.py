@@ -3,6 +3,8 @@ import numpy as np
 import torch
 import psutil
 from logger import Logger
+# from main import Config
+import scipy.io
 
 logger = Logger()
 
@@ -81,7 +83,7 @@ def get_next_folder_number(base_name="output/Angio", extension=".txt"):
     
     return folder_name
 
-def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, training_time, model, fig_loss):
+def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter, training_time, model, config, total_execution_time, fig_loss):
     # Uso della funzione per creare una cartella progressiva
     folder_name = get_next_folder_number()
 
@@ -93,6 +95,11 @@ def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter,
     np.save(os.path.join(folder_name, "P.npy"), P)
     np.save(os.path.join(folder_name, "I.npy"), I)
     np.save(os.path.join(folder_name, "F.npy"), F)
+    # Salva le matrici in formato .mat
+    scipy.io.savemat(os.path.join(folder_name, "C.mat"), {"C": C})
+    scipy.io.savemat(os.path.join(folder_name, "P.mat"), {"P": P})
+    scipy.io.savemat(os.path.join(folder_name, "I.mat"), {"I": I})
+    scipy.io.savemat(os.path.join(folder_name, "F.mat"), {"F": F})
     torch.save(model.net.state_dict(), os.path.join(folder_name, 'best_model.pth'))
 
     # Plot the model (trained)
@@ -106,10 +113,21 @@ def save_all(C, P, I, F, fig, X_train, T_train, X_test, T_test, device, counter,
         f.write(f"[INFO] T_train: {T_train.shape}\n")
         f.write(f"[INFO] X_test: {X_test.shape}\n")
         f.write(f"[INFO] T_test: {T_test.shape}\n")
+        
+        f.write(f"[INFO] ****** Config ******\n")
+        f.write(f"[INFO] Lf: {config.Lf}\n")
+        f.write(f"[INFO] Tf: {config.Tf}\n")
+        f.write(f"[INFO] LAYERS: {config.LAYERS}\n")
+        f.write(f"[INFO] EPSILON: {config.EPSILON}\n")
+        f.write(f"[INFO] LEARNING_RATE: {config.LEARNING_RATE}\n")
+        f.write(f"[INFO] PATIENCE: {config.PATIENCE}\n")
+        f.write(f"[INFO] EPOCHS: {config.EPOCHS}\n")
 
         f.write(f"[INFO] ********* Info Device ********\n")
         f.write(f"[INFO] Device: {device}\n")
         for info in counter:
             f.write(f"[INFO] {info}\n")
 
+        f.write(f"[INFO] ********* Time ********\n")
+        f.write(f"[INFO] Total execution time: {total_execution_time}\n")
         f.write(f"[INFO] Training time: {training_time}\n")
