@@ -66,7 +66,7 @@ def print_system_info():
     
     return counter
 
-def get_next_folder_number(base_name="Angio", extension=".txt"):
+def get_next_folder_number(base_name="output/Angio", extension=".txt"):
     """
     Restituisce il nome della prossima cartella disponibile in base al nome base e all'estensione.
     E.g. Angio#1, Angio#2, Angio#3, ...
