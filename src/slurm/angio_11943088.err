@@ -1,0 +1,20 @@
+†[INFO] GPU specified and is available. Usage: cuda
+[INFO] Final device selected: cuda
+[INFO] Available logical CPUs: 32
+[INFO] Available physical CPUs: 32
+[INFO] Number of available GPUs: 1
+[INFO] GPU 0: NVIDIA A100-SXM-64GB, Memory: 63.42 GB
+[INFO] GPU 0 - Allocated memory: 0.00 GB, Cache memory: 0.00 GB
+[INFO] Loading the dataset...
+[INFO] ****** Shape of dataset ******
+[INFO] X_train: torch.Size([2500, 1])
+[INFO] T_train: torch.Size([2500, 1])
+[INFO] X_test:  torch.Size([2500, 1])
+[INFO] T_test:  torch.Size([2500, 1])
+[INFO] Model created successfully
+[INFO] Training...
+[INFO]:   0%|          | 0/100 [00:00<?, ?it/s][INFO]:   1%|          | 1/100 [00:01<01:51,  1.12s/it][INFO]:   7%|▋         | 7/100 [00:01<00:12,  7.49it/s][INFO]:  13%|█▎        | 13/100 [00:01<00:05, 14.57it/s][INFO]:  19%|█▉        | 19/100 [00:01<00:03, 21.77it/s][INFO]:  25%|██▌       | 25/100 [00:01<00:02, 28.59it/s][INFO]:  31%|███       | 31/100 [00:01<00:01, 34.67it/s][INFO]:  37%|███▋      | 37/100 [00:01<00:01, 39.80it/s][INFO]:  43%|████▎     | 43/100 [00:01<00:01, 44.06it/s][INFO]:  49%|████▉     | 49/100 [00:01<00:01, 47.36it/s][INFO]:  55%|█████▌    | 55/100 [00:02<00:00, 49.81it/s][INFO]:  61%|██████    | 61/100 [00:02<00:00, 51.71it/s][INFO]:  67%|██████▋   | 67/100 [00:02<00:00, 53.22it/s][INFO]:  73%|███████▎  | 73/100 [00:02<00:00, 54.31it/s][INFO]:  79%|███████▉  | 79/100 [00:02<00:00, 55.03it/s][INFO]:  85%|████████▌ | 85/100 [00:02<00:00, 55.37it/s][INFO]:  91%|█████████ | 91/100 [00:02<00:00, 55.64it/s][INFO]:  97%|█████████▋| 97/100 [00:02<00:00, 55.87it/s][INFO]: 100%|██████████| 100/100 [00:02<00:00, 34.72it/s]
+[INFO] Training time: 0:00:04.584042
+[INFO] Plotting...
+[INFO] Total execution time: 0:00:06.760603
+[INFO] All operations were performed successfully
