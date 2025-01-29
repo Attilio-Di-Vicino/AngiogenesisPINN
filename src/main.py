@@ -27,11 +27,11 @@ logger = Logger()
 
 class Config:
     def __init__(self):
-        self.INPUT_SIZE = 50
+        self.INPUT_SIZE = 125
         self.TEST_SIZE = 0.5
         self.nx, self.nt = self.INPUT_SIZE, self.INPUT_SIZE 
-        self.Lf = 20
-        self.Tf = 25
+        self.Lf = 25
+        self.Tf = 50
         self.LAYERS = [2, 100, 150, 150, 100, 4]
         self.EPSILON = 40 # A parameter controlling the tumor angiogenic factor
         self.LEARNING_RATE = 0.001

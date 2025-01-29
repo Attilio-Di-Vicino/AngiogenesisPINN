@@ -1,0 +1,23 @@
+[INFO] ****** Shape of dataset ******
+[INFO] X_train: torch.Size([15625, 1])
+[INFO] T_train: torch.Size([15625, 1])
+[INFO] X_test: torch.Size([15625, 1])
+[INFO] T_test: torch.Size([15625, 1])
+[INFO] ****** Config ******
+[INFO] Lf: 25
+[INFO] Tf: 50
+[INFO] LAYERS: [2, 100, 150, 150, 100, 4]
+[INFO] EPSILON: 40
+[INFO] LEARNING_RATE: 0.001
+[INFO] PATIENCE: 50
+[INFO] EPOCHS: 100
+[INFO] ********* Info Device ********
+[INFO] Device: cuda
+[INFO] Logical CPUs: 32
+[INFO] Physical CPUs: 32
+[INFO] Number of available GPUs: 1
+[INFO] GPU 0: NVIDIA A100-SXM-64GB, Memory: 63.42 GB
+[INFO] GPU 0 - Allocated memory: 0.00 GB, Cache memory: 0.00 GB
+[INFO] ********* Time ********
+[INFO] Total execution time: 0:00:07.693728
+[INFO] Training time: 0:00:05.509854
