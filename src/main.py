@@ -30,8 +30,8 @@ class Config:
         self.INPUT_SIZE = 50
         self.TEST_SIZE = 0.5
         self.nx, self.nt = self.INPUT_SIZE, self.INPUT_SIZE 
-        self.Lf = 10
-        self.Tf = 10
+        self.Lf = 15
+        self.Tf = 15
         self.LAYERS = [2, 100, 150, 150, 100, 4]
         self.EPSILON = 40 # A parameter controlling the tumor angiogenic factor
         self.LEARNING_RATE = 0.001
