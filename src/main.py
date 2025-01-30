@@ -27,7 +27,7 @@ logger = Logger()
 
 class Config:
     def __init__(self):
-        self.INPUT_SIZE = 125
+        self.INPUT_SIZE = 100
         self.TEST_SIZE = 0.5
         self.nx, self.nt = self.INPUT_SIZE, self.INPUT_SIZE 
         self.Lf = 25
